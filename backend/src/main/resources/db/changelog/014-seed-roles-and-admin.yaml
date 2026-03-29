@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 014-seed-roles
+      author: bobcarrental
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: name
+                  value: ROLE_ADMIN
+              - column:
+                  name: description
+                  value: Administrator role with full access
+              - column:
+                  name: created_at
+                  valueDate: now()
+              - column:
+                  name: updated_at
+                  valueDate: now()
+        
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: name
+                  value: ROLE_USER
+              - column:
+                  name: description
+                  value: Standard user role with limited access
+              - column:
+                  name: created_at
+                  valueDate: now()
+              - column:
+                  name: updated_at
+                  valueDate: now()
+        
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: $2a$10$ELNyYtnRENMODpoZcSdmSuDT/mPH0LmZd9/EKk0htn.wCUrZ53aK.
+              - column:
+                  name: email
+                  value: admin@bobcarrental.com
+              - column:
+                  name: first_name
+                  value: System
+              - column:
+                  name: last_name
+                  value: Administrator
+              - column:
+                  name: enabled
+                  valueBoolean: true
+              - column:
+                  name: account_non_expired
+                  valueBoolean: true
+              - column:
+                  name: account_non_locked
+                  valueBoolean: true
+              - column:
+                  name: credentials_non_expired
+                  valueBoolean: true
+              - column:
+                  name: created_at
+                  valueDate: now()
+              - column:
+                  name: updated_at
+                  valueDate: now()
+        
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: role_id
+                  valueNumeric: 1
+      
+      rollback:
+        - delete:
+            tableName: user_roles
+            where: user_id = 1
+        - delete:
+            tableName: users
+            where: id = 1
+        - delete:
+            tableName: roles
+            where: id IN (1, 2)
+
+# Made with Bob

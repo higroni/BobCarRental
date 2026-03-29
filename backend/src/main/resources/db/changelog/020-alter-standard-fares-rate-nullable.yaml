@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 020-alter-standard-fares-rate-nullable
+      author: bob
+      comment: Make rate column nullable in standard_fares table (different fare types use different fields)
+      changes:
+        - dropNotNullConstraint:
+            tableName: standard_fares
+            columnName: rate
+            columnDataType: DECIMAL(10,2)
+
+# Made with Bob

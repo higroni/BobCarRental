@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 013-create-header-templates-table
+      author: bob
+      changes:
+        - createTable:
+            tableName: header_templates
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: template_name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: template_content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(200)
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_default
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: template_type
+                  type: VARCHAR(20)
+                  defaultValue: 'INVOICE'
+              - column:
+                  name: line_count
+                  type: INTEGER
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(50)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(50)
+        - createIndex:
+            indexName: idx_header_template_name
+            tableName: header_templates
+            columns:
+              - column:
+                  name: template_name
+        - createIndex:
+            indexName: idx_header_active
+            tableName: header_templates
+            columns:
+              - column:
+                  name: active
+        - createIndex:
+            indexName: idx_header_is_default
+            tableName: header_templates
+            columns:
+              - column:
+                  name: is_default
+
+# Made with Bob

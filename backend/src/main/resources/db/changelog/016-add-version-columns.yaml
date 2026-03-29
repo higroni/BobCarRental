@@ -1,0 +1,138 @@
+databaseChangeLog:
+  - changeSet:
+      id: 016-add-version-columns
+      author: bob
+      changes:
+        # Add version column to roles table
+        - addColumn:
+            tableName: roles
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to users table
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to clients table
+        - addColumn:
+            tableName: clients
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to vehicle_types table
+        - addColumn:
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to vehicle_images table
+        - addColumn:
+            tableName: vehicle_images
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to bookings table
+        - addColumn:
+            tableName: bookings
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to trip_sheets table
+        - addColumn:
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to billings table
+        - addColumn:
+            tableName: billings
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to accounts table
+        - addColumn:
+            tableName: accounts
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to addresses table
+        - addColumn:
+            tableName: addresses
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to standard_fares table
+        - addColumn:
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        # Add version column to header_templates table
+        - addColumn:
+            tableName: header_templates
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+# Made with Bob

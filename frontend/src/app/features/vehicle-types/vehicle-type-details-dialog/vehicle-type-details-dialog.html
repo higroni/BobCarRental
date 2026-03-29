@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>
+  <mat-icon>directions_car</mat-icon>
+  Vehicle Type Details
+</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-row">
+      <span class="label">Type ID:</span>
+      <span class="value">{{ type.typeId }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Type Name:</span>
+      <span class="value">{{ type.typeName }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="type.description">
+      <span class="label">Description:</span>
+      <span class="value">{{ type.description }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row">
+      <span class="label">Status:</span>
+      <span class="value">
+        <mat-icon *ngIf="type.isActive" color="primary" class="status-icon">check_circle</mat-icon>
+        <mat-icon *ngIf="!type.isActive" color="warn" class="status-icon">cancel</mat-icon>
+        {{ type.isActive ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="type.createdAt">
+      <span class="label">Created:</span>
+      <span class="value">{{ type.createdAt | date:'medium' }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="type.updatedAt">
+      <span class="label">Last Updated:</span>
+      <span class="value">{{ type.updatedAt | date:'medium' }}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+</mat-dialog-actions>
+
+<!-- Made with Bob -->

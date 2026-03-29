@@ -1,0 +1,92 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .app-logo {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+
+    .app-name {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .user-section {
+    display: flex;
+    align-items: center;
+
+    .user-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+
+      .username {
+        font-weight: 500;
+      }
+
+      .role-badge {
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        background-color: rgba(255, 255, 255, 0.2);
+
+        &.admin {
+          background-color: #ff9800;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .app-header {
+    .logo-section {
+      .app-name {
+        display: none;
+      }
+    }
+
+    .user-section {
+      .username {
+        display: none;
+      }
+    }
+  }
+}
+
+// Made with Bob

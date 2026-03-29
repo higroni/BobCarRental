@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>
+  <mat-icon>location_on</mat-icon>
+  Address Details
+</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-row">
+      <span class="label">Client ID:</span>
+      <span class="value">{{ address.clientId }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Name:</span>
+      <span class="value">{{ address.name }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.dept">
+      <span class="label">Department:</span>
+      <span class="value">{{ address.dept }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.desc">
+      <span class="label">Description:</span>
+      <span class="value">{{ address.desc }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="address.address1">
+      <span class="label">Address Line 1:</span>
+      <span class="value">{{ address.address1 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.address2">
+      <span class="label">Address Line 2:</span>
+      <span class="value">{{ address.address2 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.address3">
+      <span class="label">Address Line 3:</span>
+      <span class="value">{{ address.address3 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.place">
+      <span class="label">Place:</span>
+      <span class="value">{{ address.place }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.city">
+      <span class="label">City:</span>
+      <span class="value">{{ address.city }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.pinCode">
+      <span class="label">Pin Code:</span>
+      <span class="value">{{ address.pinCode }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="address.phone">
+      <span class="label">Phone:</span>
+      <span class="value">{{ address.phone }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.fax">
+      <span class="label">Fax:</span>
+      <span class="value">{{ address.fax }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.category">
+      <span class="label">Category:</span>
+      <span class="value">{{ address.category }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.companyName">
+      <span class="label">Company Name:</span>
+      <span class="value">{{ address.companyName }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row">
+      <span class="label">Status:</span>
+      <span class="value">
+        <mat-icon *ngIf="address.isActive" color="primary" class="status-icon">check_circle</mat-icon>
+        <mat-icon *ngIf="!address.isActive" color="warn" class="status-icon">cancel</mat-icon>
+        {{ address.isActive ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="address.createdAt">
+      <span class="label">Created:</span>
+      <span class="value">{{ address.createdAt | date:'medium' }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="address.updatedAt">
+      <span class="label">Last Updated:</span>
+      <span class="value">{{ address.updatedAt | date:'medium' }}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+</mat-dialog-actions>
+
+<!-- Made with Bob -->

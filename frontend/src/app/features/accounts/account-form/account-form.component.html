@@ -1,0 +1,87 @@
+<div class="account-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>{{ isEditMode ? 'Edit Account' : 'New Account' }}</h1>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description *</mat-label>
+            <input matInput formControlName="desc" maxlength="15" required />
+            <mat-error *ngIf="accountForm.get('desc')?.hasError('required')">
+              Description is required
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('desc')?.hasError('maxlength')">
+              Maximum 15 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Number</mat-label>
+            <input matInput type="number" formControlName="num" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Date *</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" required />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="accountForm.get('date')?.hasError('required')">
+              Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Client ID *</mat-label>
+            <input matInput formControlName="clientId" maxlength="10" required />
+            <mat-error *ngIf="accountForm.get('clientId')?.hasError('required')">
+              Client ID is required
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('clientId')?.hasError('maxlength')">
+              Maximum 10 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Amount *</mat-label>
+            <input matInput type="number" step="0.01" formControlName="amount" required />
+            <mat-error *ngIf="accountForm.get('amount')?.hasError('required')">
+              Amount is required
+            </mat-error>
+            <mat-error *ngIf="accountForm.get('amount')?.hasError('min')">
+              Amount must be non-negative
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="tagged">Tagged</mat-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Cancel
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="accountForm.invalid || isSubmitting"
+          >
+            {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Update' : 'Create') }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

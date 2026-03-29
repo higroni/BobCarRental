@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 021-reset-sequences
+      author: bobcarrental
+      comment: Reset auto-increment sequences after seeding data with explicit IDs
+      changes:
+        # Reset users sequence to start after seeded data
+        - sql:
+            sql: ALTER TABLE users ALTER COLUMN id RESTART WITH 100
+            
+        # Reset roles sequence to start after seeded data  
+        - sql:
+            sql: ALTER TABLE roles ALTER COLUMN id RESTART WITH 10
+            
+      rollback:
+        - sql:
+            sql: ALTER TABLE users ALTER COLUMN id RESTART WITH 1
+        - sql:
+            sql: ALTER TABLE roles ALTER COLUMN id RESTART WITH 1
+
+# Made with Bob

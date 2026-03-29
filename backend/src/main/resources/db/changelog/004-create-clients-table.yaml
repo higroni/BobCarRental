@@ -1,0 +1,99 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-clients-table
+      author: bob
+      changes:
+        - createTable:
+            tableName: clients
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: client_name
+                  type: VARCHAR(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address1
+                  type: VARCHAR(35)
+              - column:
+                  name: address2
+                  type: VARCHAR(30)
+              - column:
+                  name: address3
+                  type: VARCHAR(25)
+              - column:
+                  name: place
+                  type: VARCHAR(20)
+              - column:
+                  name: city
+                  type: VARCHAR(15)
+              - column:
+                  name: pin_code
+                  type: INTEGER
+              - column:
+                  name: phone
+                  type: VARCHAR(25)
+              - column:
+                  name: fax
+                  type: VARCHAR(25)
+              - column:
+                  name: fare
+                  type: TEXT
+              - column:
+                  name: is_split
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: tagged
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(50)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(50)
+        - createIndex:
+            indexName: idx_clients_client_id
+            tableName: clients
+            columns:
+              - column:
+                  name: client_id
+        - createIndex:
+            indexName: idx_clients_deleted
+            tableName: clients
+            columns:
+              - column:
+                  name: deleted
+        - createIndex:
+            indexName: idx_clients_city
+            tableName: clients
+            columns:
+              - column:
+                  name: city
+
+# Made with Bob

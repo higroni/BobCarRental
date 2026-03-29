@@ -1,0 +1,178 @@
+databaseChangeLog:
+  - changeSet:
+      id: 008-create-trip-sheets-table
+      author: bob
+      changes:
+        - createTable:
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: trp_num
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: client_name
+                  type: VARCHAR(35)
+              - column:
+                  name: trp_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reg_num
+                  type: VARCHAR(14)
+              - column:
+                  name: start_km
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_km
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type_id
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: vehicle_type_fk
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_trip_sheets_vehicle_type
+                    references: vehicle_types(id)
+              - column:
+                  name: start_dt
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_dt
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_tm
+                  type: VARCHAR(5)
+              - column:
+                  name: end_tm
+                  type: VARCHAR(5)
+              - column:
+                  name: driver
+                  type: VARCHAR(25)
+              - column:
+                  name: client_id
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client_fk
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_trip_sheets_client
+                    references: clients(id)
+              - column:
+                  name: is_billed
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bill_num
+                  type: INTEGER
+              - column:
+                  name: bill_date
+                  type: DATE
+              - column:
+                  name: status
+                  type: VARCHAR(1)
+              - column:
+                  name: hiring
+                  type: DECIMAL(10,2)
+              - column:
+                  name: extra
+                  type: DECIMAL(10,2)
+              - column:
+                  name: halt
+                  type: DECIMAL(10,2)
+              - column:
+                  name: minimum
+                  type: DECIMAL(10,2)
+              - column:
+                  name: time
+                  type: INTEGER
+              - column:
+                  name: days
+                  type: INTEGER
+              - column:
+                  name: permit
+                  type: DECIMAL(10,2)
+                  defaultValueNumeric: 0
+              - column:
+                  name: misc
+                  type: DECIMAL(10,2)
+                  defaultValueNumeric: 0
+              - column:
+                  name: tagged
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(50)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(50)
+        - createIndex:
+            indexName: idx_trp_num
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: trp_num
+        - createIndex:
+            indexName: idx_trp_date
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: trp_date
+        - createIndex:
+            indexName: idx_trp_client_id
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: client_id
+        - createIndex:
+            indexName: idx_bill_num
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: bill_num
+        - createIndex:
+            indexName: idx_is_billed
+            tableName: trip_sheets
+            columns:
+              - column:
+                  name: is_billed
+
+# Made with Bob

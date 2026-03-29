@@ -1,0 +1,75 @@
+<div class="vehicle-type-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>{{ isEditMode ? 'Edit' : 'New' }} Vehicle Type</h2>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <form [formGroup]="vehicleTypeForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type ID</mat-label>
+            <input matInput formControlName="typeId" placeholder="e.g., AMB, CON" maxlength="5" [readonly]="isEditMode">
+            <mat-hint>Maximum 5 characters, uppercase alphanumeric</mat-hint>
+            <mat-error *ngIf="vehicleTypeForm.get('typeId')?.hasError('required')">
+              Type ID is required
+            </mat-error>
+            <mat-error *ngIf="vehicleTypeForm.get('typeId')?.hasError('maxlength')">
+              Type ID must not exceed 5 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type Name</mat-label>
+            <input matInput formControlName="typeName" placeholder="e.g., Ambulance, Container" maxlength="30">
+            <mat-hint>Maximum 30 characters</mat-hint>
+            <mat-error *ngIf="vehicleTypeForm.get('typeName')?.hasError('required')">
+              Type name is required
+            </mat-error>
+            <mat-error *ngIf="vehicleTypeForm.get('typeName')?.hasError('maxlength')">
+              Type name must not exceed 30 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description (Optional)</mat-label>
+            <textarea matInput formControlName="description" placeholder="Additional details about this vehicle type"
+                      maxlength="100" rows="3"></textarea>
+            <mat-hint>Maximum 100 characters</mat-hint>
+            <mat-error *ngIf="vehicleTypeForm.get('description')?.hasError('maxlength')">
+              Description must not exceed 100 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-slide-toggle formControlName="isActive" color="primary">
+            Active
+          </mat-slide-toggle>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="onCancel()" [disabled]="submitting">
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!vehicleTypeForm.valid || submitting">
+            <mat-spinner *ngIf="submitting" diameter="20"></mat-spinner>
+            <span *ngIf="!submitting">{{ isEditMode ? 'Update' : 'Create' }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

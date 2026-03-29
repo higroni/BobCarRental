@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-users-table
+      author: bobcarrental
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(50)
+              - column:
+                  name: last_name
+                  type: VARCHAR(50)
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_non_expired
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_non_locked
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: credentials_non_expired
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login
+                  type: TIMESTAMP
+              - column:
+                  name: failed_login_attempts
+                  type: INTEGER
+                  defaultValueNumeric: 0
+              - column:
+                  name: locked_until
+                  type: TIMESTAMP
+              - column:
+                  name: refresh_token
+                  type: VARCHAR(500)
+              - column:
+                  name: refresh_token_expiry
+                  type: TIMESTAMP
+              - column:
+                  name: device_id
+                  type: VARCHAR(100)
+              - column:
+                  name: device_type
+                  type: VARCHAR(50)
+              - column:
+                  name: fcm_token
+                  type: VARCHAR(500)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+      
+      rollback:
+        - dropTable:
+            tableName: users
+
+# Made with Bob

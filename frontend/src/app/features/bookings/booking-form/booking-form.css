@@ -1,0 +1,70 @@
+.booking-form-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+mat-card-header {
+  margin-bottom: 20px;
+}
+
+mat-card-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.error-message {
+  padding: 15px;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: calc(50% - 8px);
+}
+
+.third-width {
+  width: calc(33.333% - 11px);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.form-actions button {
+  min-width: 120px;
+}
+
+mat-form-field {
+  font-size: 14px;
+}
+
+/* Made with Bob */

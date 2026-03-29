@@ -1,0 +1,156 @@
+<div class="booking-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Bookings</h2>
+      </mat-card-title>
+      <div class="header-actions">
+        <button mat-raised-button color="primary" (click)="createBooking()">
+          <mat-icon>add</mat-icon>
+          New Booking
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Search Bar -->
+      <div class="search-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search bookings</mat-label>
+          <input
+            matInput
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange($any($event.target).value)"
+            placeholder="Search by ref, client, vehicle type, status, or date...">
+          <mat-icon matPrefix>search</mat-icon>
+          <button
+            mat-icon-button
+            matSuffix
+            *ngIf="searchTerm"
+            (click)="clearSearch()"
+            aria-label="Clear search">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <div *ngIf="loading" class="loading-spinner">
+        Loading bookings...
+      </div>
+
+      <div *ngIf="!loading && bookings.length === 0" class="no-data">
+        <p>No bookings found.</p>
+        <button mat-raised-button color="primary" (click)="createBooking()">
+          Create First Booking
+        </button>
+      </div>
+
+      <table mat-table [dataSource]="filteredBookings" *ngIf="!loading && bookings.length > 0" class="bookings-table">
+        
+        <!-- Reference Column -->
+        <ng-container matColumnDef="ref">
+          <th mat-header-cell *matHeaderCellDef>Ref #</th>
+          <td mat-cell *matCellDef="let booking">
+            <strong>{{ booking.ref || '-' }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Booking Date Column -->
+        <ng-container matColumnDef="bookDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let booking">
+            {{ booking.bookDate | date:'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Time</th>
+          <td mat-cell *matCellDef="let booking">
+            {{ booking.time || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Client Name Column -->
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>Client</th>
+          <td mat-cell *matCellDef="let booking">
+            {{ booking.clientName || booking.clientId }}
+          </td>
+        </ng-container>
+
+        <!-- Vehicle Type Column -->
+        <ng-container matColumnDef="typeName">
+          <th mat-header-cell *matHeaderCellDef>Vehicle Type</th>
+          <td mat-cell *matCellDef="let booking">
+            {{ booking.typeName || booking.typeId }}
+          </td>
+        </ng-container>
+
+        <!-- Info Column -->
+        <ng-container matColumnDef="info1">
+          <th mat-header-cell *matHeaderCellDef>Location/Info</th>
+          <td mat-cell *matCellDef="let booking">
+            {{ booking.info1 || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let booking">
+            <mat-chip *ngIf="booking.status" [ngClass]="getStatusClass(booking.status)">
+              {{ getStatusLabel(booking.status) }}
+            </mat-chip>
+            <span *ngIf="!booking.status">-</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let booking">
+            <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="viewBooking(booking.id)">
+                <mat-icon>visibility</mat-icon>
+                <span>View</span>
+              </button>
+              <button mat-menu-item (click)="editBooking(booking.id)" [disabled]="!canEdit(booking)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="confirmBooking(booking)" [disabled]="!canConfirm(booking)">
+                <mat-icon>check_circle</mat-icon>
+                <span>Confirm</span>
+              </button>
+              <button mat-menu-item (click)="completeBooking(booking)" [disabled]="!canComplete(booking)">
+                <mat-icon>done_all</mat-icon>
+                <span>Complete</span>
+              </button>
+              <button mat-menu-item (click)="cancelBooking(booking)" [disabled]="!canCancel(booking)">
+                <mat-icon>cancel</mat-icon>
+                <span>Cancel</span>
+              </button>
+              <button mat-menu-item (click)="deleteBooking(booking)" [disabled]="!canDelete(booking)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

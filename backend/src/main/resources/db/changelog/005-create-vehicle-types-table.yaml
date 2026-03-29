@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-vehicle-types-table
+      author: bob
+      changes:
+        - createTable:
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: type_id
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: type_desc
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tagged
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(50)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(50)
+        - createIndex:
+            indexName: idx_vehicle_types_type_id
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: type_id
+        - createIndex:
+            indexName: idx_vehicle_types_deleted
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: deleted
+
+# Made with Bob

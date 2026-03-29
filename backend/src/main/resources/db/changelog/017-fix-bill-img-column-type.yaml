@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 017-fix-text-column-types
+      author: bob
+      changes:
+        # Fix all TEXT columns that H2 converts to CLOB
+        # Hibernate expects VARCHAR for String fields with columnDefinition="TEXT"
+        
+        # Fix billings.bill_img (bill content)
+        - modifyDataType:
+            tableName: billings
+            columnName: bill_img
+            newDataType: VARCHAR(10000)
+        
+        # Fix clients.fare (fare information)
+        - modifyDataType:
+            tableName: clients
+            columnName: fare
+            newDataType: VARCHAR(5000)
+        
+        # Fix header_templates.template_content (template content)
+        - modifyDataType:
+            tableName: header_templates
+            columnName: template_content
+            newDataType: VARCHAR(10000)
+
+# Made with Bob

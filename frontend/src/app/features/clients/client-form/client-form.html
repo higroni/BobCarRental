@@ -1,0 +1,169 @@
+<div class="client-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-content">
+          <mat-icon>{{ isEditMode ? 'edit' : 'add' }}</mat-icon>
+          <span>{{ isEditMode ? 'Edit Client' : 'New Client' }}</span>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading client data...</p>
+      </div>
+
+      <!-- Form -->
+      <form *ngIf="!loading" [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <!-- Basic Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Basic Information</h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Client ID</mat-label>
+              <input matInput formControlName="clientId" placeholder="Enter unique client ID" />
+              <mat-icon matPrefix>badge</mat-icon>
+              <mat-hint>Max 10 characters</mat-hint>
+              <mat-error *ngIf="clientForm.get('clientId')?.invalid">
+                Client ID is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Client Name</mat-label>
+              <input matInput formControlName="clientName" placeholder="Enter client name" />
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-error *ngIf="clientForm.get('clientName')?.invalid">
+                Client name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Address Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Address Information</h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Address</mat-label>
+              <textarea matInput formControlName="address" rows="3" placeholder="Enter full address"></textarea>
+              <mat-icon matPrefix>home</mat-icon>
+              <mat-error *ngIf="clientForm.get('address')?.invalid">
+                Address is too long (max 255 characters)
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" placeholder="Enter city" />
+              <mat-icon matPrefix>location_city</mat-icon>
+              <mat-error *ngIf="clientForm.get('city')?.invalid">
+                City is too long (max 50 characters)
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Contact Information</h3>
+          
+          <div class="form-row two-columns">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone" placeholder="Enter phone number" />
+              <mat-icon matPrefix>phone</mat-icon>
+              <mat-error *ngIf="clientForm.get('phone')?.invalid">
+                Phone is too long (max 20 characters)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Mobile</mat-label>
+              <input matInput formControlName="mobile" placeholder="Enter mobile number" />
+              <mat-icon matPrefix>smartphone</mat-icon>
+              <mat-error *ngIf="clientForm.get('mobile')?.invalid">
+                Mobile is too long (max 20 characters)
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" placeholder="Enter email address" />
+              <mat-icon matPrefix>email</mat-icon>
+              <mat-error *ngIf="clientForm.get('email')?.invalid">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Tax Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Tax Information</h3>
+          
+          <div class="form-row two-columns">
+            <mat-form-field appearance="outline">
+              <mat-label>GST Number</mat-label>
+              <input matInput formControlName="gstNumber" placeholder="Enter GST number" />
+              <mat-icon matPrefix>receipt</mat-icon>
+              <mat-error *ngIf="clientForm.get('gstNumber')?.invalid">
+                GST number is too long (max 15 characters)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>PAN Number</mat-label>
+              <input matInput formControlName="panNumber" placeholder="Enter PAN number" />
+              <mat-icon matPrefix>credit_card</mat-icon>
+              <mat-error *ngIf="clientForm.get('panNumber')?.invalid">
+                PAN number is too long (max 10 characters)
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Status Section -->
+        <div class="form-section">
+          <h3 class="section-title">Status</h3>
+          
+          <div class="form-row">
+            <mat-slide-toggle formControlName="isActive" color="primary">
+              <span class="toggle-label">
+                <mat-icon>{{ clientForm.get('isActive')?.value ? 'check_circle' : 'cancel' }}</mat-icon>
+                Active Client
+              </span>
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="onCancel()" [disabled]="submitting">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+          
+          <button mat-raised-button color="primary" type="submit" [disabled]="clientForm.invalid || submitting">
+            <mat-spinner *ngIf="submitting" diameter="20"></mat-spinner>
+            <mat-icon *ngIf="!submitting">{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+            {{ submitting ? 'Saving...' : (isEditMode ? 'Update' : 'Create') }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

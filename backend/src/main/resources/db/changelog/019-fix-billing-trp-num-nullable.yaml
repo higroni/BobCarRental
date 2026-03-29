@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 019-fix-billing-trp-num-nullable
+      author: bob
+      changes:
+        - dropNotNullConstraint:
+            tableName: billings
+            columnName: trp_num
+            columnDataType: INTEGER
+        - dropNotNullConstraint:
+            tableName: billings
+            columnName: bill_amt
+            columnDataType: DECIMAL(10,2)
+      rollback:
+        - addNotNullConstraint:
+            tableName: billings
+            columnName: trp_num
+            columnDataType: INTEGER
+        - addNotNullConstraint:
+            tableName: billings
+            columnName: bill_amt
+            columnDataType: DECIMAL(10,2)
+
+# Made with Bob

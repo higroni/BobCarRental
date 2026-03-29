@@ -1,0 +1,75 @@
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  
+  mat-icon {
+    color: #1976d2;
+  }
+}
+
+mat-dialog-content {
+  min-width: 500px;
+  max-height: 70vh;
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 16px;
+  padding: 8px 0;
+  
+  .label {
+    font-weight: 500;
+    color: #666;
+  }
+  
+  .value {
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .status-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  mat-dialog-content {
+    min-width: 300px;
+  }
+  
+  .detail-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    
+    .label {
+      font-size: 0.9em;
+    }
+  }
+}
+
+/* Made with Bob */
+
+// Made with Bob

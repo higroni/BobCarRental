@@ -1,0 +1,128 @@
+databaseChangeLog:
+  - changeSet:
+      id: 012-create-standard-fares-table
+      author: bob
+      changes:
+        - createTable:
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vehicle_code
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: vehicle_type_fk
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_standard_fares_vehicle_type
+                    references: vehicle_types(id)
+              - column:
+                  name: fare_type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: hours
+                  type: INTEGER
+              - column:
+                  name: rate
+                  type: DECIMAL(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: free_km
+                  type: INTEGER
+              - column:
+                  name: split_fare
+                  type: DECIMAL(10,2)
+              - column:
+                  name: split_fuel_km
+                  type: INTEGER
+              - column:
+                  name: hire_rate
+                  type: DECIMAL(10,2)
+              - column:
+                  name: hire_km
+                  type: INTEGER
+              - column:
+                  name: fuel_rate_per_km
+                  type: DECIMAL(10,2)
+              - column:
+                  name: rate_per_excess_km
+                  type: DECIMAL(10,2)
+              - column:
+                  name: rate_per_km
+                  type: DECIMAL(10,2)
+              - column:
+                  name: min_km_per_day
+                  type: INTEGER
+              - column:
+                  name: night_halt
+                  type: DECIMAL(10,2)
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: effective_from
+                  type: DATE
+              - column:
+                  name: effective_to
+                  type: DATE
+              - column:
+                  name: description
+                  type: VARCHAR(200)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(50)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(50)
+        - addUniqueConstraint:
+            tableName: standard_fares
+            columnNames: vehicle_code, fare_type, hours
+            constraintName: uk_standard_fares_vehicle_fare_hours
+        - createIndex:
+            indexName: idx_std_fare_vehicle_code
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: vehicle_code
+        - createIndex:
+            indexName: idx_std_fare_fare_type
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: fare_type
+        - createIndex:
+            indexName: idx_std_fare_active
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: active
+
+# Made with Bob

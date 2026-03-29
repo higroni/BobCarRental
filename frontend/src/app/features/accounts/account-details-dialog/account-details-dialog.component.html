@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Account Details</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-item">
+      <span class="label">Number:</span>
+      <span class="value">{{ account.num || 'N/A' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Description:</span>
+      <span class="value">{{ account.desc }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Date:</span>
+      <span class="value">{{ formatDate(account.date) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Client ID:</span>
+      <span class="value">{{ account.clientId }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Received Amount:</span>
+      <span class="value balance">{{ formatCurrency(account.recd) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Bill Amount:</span>
+      <span class="value balance">{{ formatCurrency(account.bill) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Tagged:</span>
+      <span class="value">
+        <mat-icon *ngIf="account.tagged" color="primary">check_circle</mat-icon>
+        <mat-icon *ngIf="!account.tagged" class="inactive-icon">cancel</mat-icon>
+      </span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Created:</span>
+      <span class="value">{{ formatDate(account.createdAt) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Updated:</span>
+      <span class="value">{{ formatDate(account.updatedAt) }}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-raised-button color="primary" (click)="onEdit()">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+</mat-dialog-actions>
+
+<!-- Made with Bob -->

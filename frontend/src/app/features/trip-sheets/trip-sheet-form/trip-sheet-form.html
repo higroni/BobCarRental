@@ -1,0 +1,343 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <span *ngIf="!isEditMode && !isViewMode">New Trip Sheet</span>
+        <span *ngIf="isEditMode">Edit Trip Sheet</span>
+        <span *ngIf="isViewMode">View Trip Sheet</span>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="error" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+
+      <form [formGroup]="tripSheetForm" (ngSubmit)="onSubmit()">
+        <!-- Basic Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>description</mat-icon>
+            Basic Information
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Trip Number</mat-label>
+              <input matInput type="number" formControlName="trpNum" required>
+              <mat-error *ngIf="tripSheetForm.get('trpNum')?.hasError('required')">
+                Trip number is required
+              </mat-error>
+              <mat-error *ngIf="tripSheetForm.get('trpNum')?.hasError('min')">
+                Trip number must be positive
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Trip Date</mat-label>
+              <input matInput [matDatepicker]="tripDatePicker" formControlName="trpDate" required>
+              <mat-datepicker-toggle matSuffix [for]="tripDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #tripDatePicker></mat-datepicker>
+              <mat-error *ngIf="tripSheetForm.get('trpDate')?.hasError('required')">
+                Trip date is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Vehicle Registration Number</mat-label>
+              <input matInput formControlName="regNum" maxlength="14" required>
+              <mat-error *ngIf="tripSheetForm.get('regNum')?.hasError('required')">
+                Registration number is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Driver Name</mat-label>
+              <input matInput formControlName="driver" maxlength="25">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Booking ID (Optional)</mat-label>
+              <input matInput formControlName="bookingId">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                  {{ status.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Client & Vehicle Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>person</mat-icon>
+            Client & Vehicle Type
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Client</mat-label>
+              <mat-select formControlName="clientId" required>
+                <mat-option *ngFor="let client of clients" [value]="client.clientId">
+                  {{ client.clientName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="tripSheetForm.get('clientId')?.hasError('required')">
+                Client is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Vehicle Type</mat-label>
+              <mat-select formControlName="typeId" required>
+                <mat-option *ngFor="let type of vehicleTypes" [value]="type.typeId">
+                  {{ type.typeName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="tripSheetForm.get('typeId')?.hasError('required')">
+                Vehicle type is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Kilometer Readings Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>speed</mat-icon>
+            Kilometer Readings
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Start KM</mat-label>
+              <input matInput type="number" formControlName="startKm" required>
+              <mat-error *ngIf="tripSheetForm.get('startKm')?.hasError('required')">
+                Start KM is required
+              </mat-error>
+              <mat-error *ngIf="tripSheetForm.get('startKm')?.hasError('min')">
+                Start KM must be positive
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End KM</mat-label>
+              <input matInput type="number" formControlName="endKm" required>
+              <mat-error *ngIf="tripSheetForm.get('endKm')?.hasError('required')">
+                End KM is required
+              </mat-error>
+              <mat-error *ngIf="tripSheetForm.get('endKm')?.hasError('min')">
+                End KM must be positive
+              </mat-error>
+            </mat-form-field>
+
+            <div class="calculated-field">
+              <mat-label>Total KM</mat-label>
+              <div class="calculated-value">{{ getTotalKm() }}</div>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Date & Time Range Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>schedule</mat-icon>
+            Date & Time Range
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" required>
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+              <mat-error *ngIf="tripSheetForm.get('startDate')?.hasError('required')">
+                Start date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Time (HH:MM)</mat-label>
+              <input matInput formControlName="startTime" placeholder="14:30">
+              <mat-error *ngIf="tripSheetForm.get('startTime')?.hasError('pattern')">
+                Invalid time format (use HH:MM)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Time (HH:MM)</mat-label>
+              <input matInput formControlName="endTime" placeholder="18:45">
+              <mat-error *ngIf="tripSheetForm.get('endTime')?.hasError('pattern')">
+                Invalid time format (use HH:MM)
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Fare Calculations Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>attach_money</mat-icon>
+            Fare Calculations
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Hiring Charges</mat-label>
+              <input matInput type="number" formControlName="hiring" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Extra Charges</mat-label>
+              <input matInput type="number" formControlName="extra" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Halt Charges</mat-label>
+              <input matInput type="number" formControlName="halt" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Minimum Charges</mat-label>
+              <input matInput type="number" formControlName="minimum" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Time Charges</mat-label>
+              <input matInput type="number" formControlName="time" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Days</mat-label>
+              <input matInput type="number" formControlName="days">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Permit Charges</mat-label>
+              <input matInput type="number" formControlName="permit" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Miscellaneous</mat-label>
+              <input matInput type="number" formControlName="misc" step="0.01">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <div class="calculated-field">
+              <mat-label>Total Amount</mat-label>
+              <div class="calculated-value total-amount">${{ getTotalAmount().toFixed(2) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Billing Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>receipt</mat-icon>
+            Billing Information
+          </h3>
+          
+          <div class="form-row">
+            <mat-checkbox formControlName="isBilled" class="full-width-checkbox">
+              Is Billed
+            </mat-checkbox>
+          </div>
+
+          <div class="form-row" *ngIf="tripSheetForm.get('isBilled')?.value">
+            <mat-form-field appearance="outline">
+              <mat-label>Bill Number</mat-label>
+              <input matInput formControlName="billNumber">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Bill Date</mat-label>
+              <input matInput [matDatepicker]="billDatePicker" formControlName="billDate">
+              <mat-datepicker-toggle matSuffix [for]="billDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #billDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Additional Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>notes</mat-icon>
+            Additional Information
+          </h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks" rows="3" maxlength="255"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-checkbox formControlName="tagged" class="full-width-checkbox">
+              Tagged
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Cancel
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="loading || isViewMode"
+            *ngIf="!isViewMode">
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

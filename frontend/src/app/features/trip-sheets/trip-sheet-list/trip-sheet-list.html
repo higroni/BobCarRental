@@ -1,0 +1,154 @@
+<div class="trip-sheet-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Trip Sheets</h2>
+      </mat-card-title>
+      <div class="header-actions">
+        <button mat-raised-button color="primary" (click)="createTripSheet()">
+          <mat-icon>add</mat-icon>
+          New Trip Sheet
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Search Bar -->
+      <div class="search-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search trip sheets</mat-label>
+          <input 
+            matInput 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearchChange($any($event.target).value)"
+            placeholder="Search by trip#, client, vehicle, reg#, or date...">
+          <mat-icon matPrefix>search</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            *ngIf="searchTerm" 
+            (click)="clearSearch()"
+            aria-label="Clear search">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <div *ngIf="loading" class="loading-spinner">
+        Loading trip sheets...
+      </div>
+
+      <div *ngIf="!loading && tripSheets.length === 0" class="no-data">
+        <p>No trip sheets found.</p>
+        <button mat-raised-button color="primary" (click)="createTripSheet()">
+          Create First Trip Sheet
+        </button>
+      </div>
+
+      <table mat-table [dataSource]="filteredTripSheets" *ngIf="!loading && tripSheets.length > 0" class="trip-sheets-table">
+        
+        <!-- Trip Number Column -->
+        <ng-container matColumnDef="trpNum">
+          <th mat-header-cell *matHeaderCellDef>Trip #</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            <strong>{{ tripSheet.trpNum }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Trip Date Column -->
+        <ng-container matColumnDef="trpDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ tripSheet.trpDate | date:'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <!-- Client Name Column -->
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>Client</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ tripSheet.clientName || tripSheet.clientId }}
+          </td>
+        </ng-container>
+
+        <!-- Registration Number Column -->
+        <ng-container matColumnDef="regNum">
+          <th mat-header-cell *matHeaderCellDef>Vehicle</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ tripSheet.regNum || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Vehicle Type Column -->
+        <ng-container matColumnDef="typeName">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ tripSheet.typeName || tripSheet.typeId }}
+          </td>
+        </ng-container>
+
+        <!-- Total KM Column -->
+        <ng-container matColumnDef="totalKm">
+          <th mat-header-cell *matHeaderCellDef>Total KM</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ tripSheet.totalKm || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Total Amount Column -->
+        <ng-container matColumnDef="totalAmount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            {{ formatCurrency(tripSheet.totalAmount) }}
+          </td>
+        </ng-container>
+
+        <!-- Billed Status Column -->
+        <ng-container matColumnDef="isBilled">
+          <th mat-header-cell *matHeaderCellDef>Billed</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            <mat-chip *ngIf="tripSheet.isBilled" class="billed-chip">
+              Bill #{{ tripSheet.billNum }}
+            </mat-chip>
+            <mat-chip *ngIf="!tripSheet.isBilled" class="unbilled-chip">
+              Unbilled
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let tripSheet">
+            <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="viewTripSheet(tripSheet.id)">
+                <mat-icon>visibility</mat-icon>
+                <span>View</span>
+              </button>
+              <button mat-menu-item (click)="editTripSheet(tripSheet.id)" [disabled]="!canEdit(tripSheet)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="deleteTripSheet(tripSheet)" [disabled]="!canDelete(tripSheet)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="020-alter-standard-fares-rate-nullable" author="bob">
+        <comment>Make rate column nullable in standard_fares table (different fare types use different fields)</comment>
+        
+        <dropNotNullConstraint 
+            tableName="standard_fares" 
+            columnName="rate" 
+            columnDataType="DECIMAL(10,2)"/>
+            
+    </changeSet>
+
+</databaseChangeLog>
+
+<!-- Made with Bob -->

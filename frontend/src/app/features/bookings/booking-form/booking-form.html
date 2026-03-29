@@ -1,0 +1,131 @@
+<div class="booking-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>{{ isViewMode ? 'View Booking' : (isEditMode ? 'Edit Booking' : 'New Booking') }}</h2>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Reference Number</mat-label>
+            <input matInput formControlName="ref" placeholder="Enter reference number (optional)">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Booking Date</mat-label>
+            <input matInput [matDatepicker]="bookDatePicker" formControlName="bookDate">
+            <mat-datepicker-toggle matSuffix [for]="bookDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #bookDatePicker></mat-datepicker>
+            <mat-error *ngIf="bookingForm.get('bookDate')?.hasError('required')">
+              Booking date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Today Date</mat-label>
+            <input matInput [matDatepicker]="todayDatePicker" formControlName="todayDate">
+            <mat-datepicker-toggle matSuffix [for]="todayDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #todayDatePicker></mat-datepicker>
+            <mat-error *ngIf="bookingForm.get('todayDate')?.hasError('required')">
+              Today date is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Time (HH:MM)</mat-label>
+            <input matInput formControlName="time" placeholder="14:30" maxlength="5">
+            <mat-hint>Format: HH:MM (e.g., 14:30)</mat-hint>
+            <mat-error *ngIf="bookingForm.get('time')?.hasError('required')">
+              Time is required
+            </mat-error>
+            <mat-error *ngIf="bookingForm.get('time')?.hasError('pattern')">
+              Invalid time format. Use HH:MM (00:00-24:59)
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Client</mat-label>
+            <mat-select formControlName="clientId">
+              <mat-option *ngFor="let client of clients" [value]="client.clientId">
+                {{ client.clientName }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="bookingForm.get('clientId')?.hasError('required')">
+              Client is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Vehicle Type</mat-label>
+            <mat-select formControlName="vehicleTypeId">
+              <mat-option *ngFor="let type of vehicleTypes" [value]="type.typeId">
+                {{ type.typeName }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="bookingForm.get('vehicleTypeId')?.hasError('required')">
+              Vehicle type is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Info Line 1</mat-label>
+            <input matInput formControlName="info1" placeholder="Pickup location or special instructions" maxlength="50">
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Info Line 2</mat-label>
+            <input matInput formControlName="info2" placeholder="Drop location or additional details" maxlength="50">
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Info Line 3</mat-label>
+            <input matInput formControlName="info3" placeholder="Additional information" maxlength="50">
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Info Line 4</mat-label>
+            <input matInput formControlName="info4" placeholder="Additional information" maxlength="50">
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="tagged">
+            Tagged for filtering/reporting
+          </mat-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="onCancel()">
+            <mat-icon>{{ isViewMode ? 'arrow_back' : 'cancel' }}</mat-icon>
+            {{ isViewMode ? 'Back' : 'Cancel' }}
+          </button>
+          <button *ngIf="!isViewMode" mat-raised-button color="primary" type="submit" [disabled]="loading || bookingForm.invalid">
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

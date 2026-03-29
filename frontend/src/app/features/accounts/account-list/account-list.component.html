@@ -1,0 +1,144 @@
+<div class="account-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Accounts Master</h1>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Search and Actions Bar -->
+      <div class="actions-bar">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search accounts</mat-label>
+          <input
+            matInput
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="applyFilter()"
+            placeholder="Search by code, description, client ID..."
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="createAccount()">
+          <mat-icon>add</mat-icon>
+          New Account
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-container">
+        <p>Loading accounts...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="error-container">
+        <p class="error-message">{{ error }}</p>
+        <button mat-button color="primary" (click)="loadAccounts()">
+          <mat-icon>refresh</mat-icon>
+          Retry
+        </button>
+      </div>
+
+      <!-- Accounts Table -->
+      <div *ngIf="!isLoading && !error" class="table-container">
+        <table mat-table [dataSource]="filteredAccounts" class="accounts-table">
+          <!-- Number Column -->
+          <ng-container matColumnDef="num">
+            <th mat-header-cell *matHeaderCellDef>Number</th>
+            <td mat-cell *matCellDef="let account">{{ account.num || '-' }}</td>
+          </ng-container>
+
+          <!-- Description Column -->
+          <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let account">{{ account.desc }}</td>
+          </ng-container>
+
+          <!-- Client ID Column -->
+          <ng-container matColumnDef="clientId">
+            <th mat-header-cell *matHeaderCellDef>Client ID</th>
+            <td mat-cell *matCellDef="let account">{{ account.clientId }}</td>
+          </ng-container>
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let account">{{ formatDate(account.date) }}</td>
+          </ng-container>
+
+          <!-- Received Amount Column -->
+          <ng-container matColumnDef="recd">
+            <th mat-header-cell *matHeaderCellDef>Received</th>
+            <td mat-cell *matCellDef="let account" class="amount-cell">
+              {{ formatCurrency(account.recd) }}
+            </td>
+          </ng-container>
+
+          <!-- Bill Amount Column -->
+          <ng-container matColumnDef="bill">
+            <th mat-header-cell *matHeaderCellDef>Bill</th>
+            <td mat-cell *matCellDef="let account" class="amount-cell">
+              {{ formatCurrency(account.bill) }}
+            </td>
+          </ng-container>
+
+          <!-- Tagged Column -->
+          <ng-container matColumnDef="tagged">
+            <th mat-header-cell *matHeaderCellDef>Tagged</th>
+            <td mat-cell *matCellDef="let account">
+              <mat-icon *ngIf="account.tagged" color="primary">check_circle</mat-icon>
+              <mat-icon *ngIf="!account.tagged" class="inactive-icon">cancel</mat-icon>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let account">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="viewDetails(account)"
+                matTooltip="View Details"
+              >
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="accent"
+                (click)="editAccount(account.id)"
+                matTooltip="Edit"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="deleteAccount(account.id, account.desc)"
+                matTooltip="Delete"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <!-- No Data Row -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+              <div class="no-data">
+                <mat-icon>inbox</mat-icon>
+                <p>No accounts found</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Made with Bob -->

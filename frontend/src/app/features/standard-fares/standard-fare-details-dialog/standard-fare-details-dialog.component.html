@@ -1,0 +1,121 @@
+<h2 mat-dialog-title>Standard Fare Details</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-item">
+      <span class="label">Vehicle Code:</span>
+      <span class="value">{{ fare.vehicleCode }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Fare Type:</span>
+      <span class="value">
+        <mat-chip>{{ fare.fareType }}</mat-chip>
+      </span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.hours !== null && fare.hours !== undefined">
+      <span class="label">Hours:</span>
+      <span class="value">{{ fare.hours }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.rate !== null && fare.rate !== undefined">
+      <span class="label">Rate:</span>
+      <span class="value amount">{{ formatCurrency(fare.rate) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.freeKm !== null && fare.freeKm !== undefined">
+      <span class="label">Free KM:</span>
+      <span class="value">{{ fare.freeKm }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.splitFare !== null && fare.splitFare !== undefined">
+      <span class="label">Split Fare:</span>
+      <span class="value amount">{{ formatCurrency(fare.splitFare) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.splitFuelKm !== null && fare.splitFuelKm !== undefined">
+      <span class="label">Split Fuel KM:</span>
+      <span class="value">{{ fare.splitFuelKm }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.hireRate !== null && fare.hireRate !== undefined">
+      <span class="label">Hire Rate:</span>
+      <span class="value amount">{{ formatCurrency(fare.hireRate) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.hireKm !== null && fare.hireKm !== undefined">
+      <span class="label">Hire KM:</span>
+      <span class="value">{{ fare.hireKm }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.fuelRatePerKm !== null && fare.fuelRatePerKm !== undefined">
+      <span class="label">Fuel Rate Per KM:</span>
+      <span class="value amount">{{ formatCurrency(fare.fuelRatePerKm) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.ratePerExcessKm !== null && fare.ratePerExcessKm !== undefined">
+      <span class="label">Rate Per Excess KM:</span>
+      <span class="value amount">{{ formatCurrency(fare.ratePerExcessKm) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.ratePerKm !== null && fare.ratePerKm !== undefined">
+      <span class="label">Rate Per KM:</span>
+      <span class="value amount">{{ formatCurrency(fare.ratePerKm) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.minKmPerDay !== null && fare.minKmPerDay !== undefined">
+      <span class="label">Min KM Per Day:</span>
+      <span class="value">{{ fare.minKmPerDay }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.nightHalt !== null && fare.nightHalt !== undefined">
+      <span class="label">Night Halt:</span>
+      <span class="value amount">{{ formatCurrency(fare.nightHalt) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.effectiveFrom">
+      <span class="label">Effective From:</span>
+      <span class="value">{{ formatDate(fare.effectiveFrom) }}</span>
+    </div>
+
+    <div class="detail-item" *ngIf="fare.effectiveTo">
+      <span class="label">Effective To:</span>
+      <span class="value">{{ formatDate(fare.effectiveTo) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Status:</span>
+      <span class="value">
+        <mat-chip [class.active-chip]="fare.isActive" [class.inactive-chip]="!fare.isActive">
+          {{ fare.isActive ? 'Active' : 'Inactive' }}
+        </mat-chip>
+      </span>
+    </div>
+
+    <div class="detail-item full-width" *ngIf="fare.description">
+      <span class="label">Description:</span>
+      <span class="value">{{ fare.description }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Created:</span>
+      <span class="value">{{ formatDate(fare.createdAt) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="label">Updated:</span>
+      <span class="value">{{ formatDate(fare.updatedAt) }}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-raised-button color="primary" (click)="onEdit()">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+</mat-dialog-actions>
+
+<!-- Made with Bob -->

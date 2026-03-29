@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 018-fix-remaining-text-columns
+      author: bob
+      changes:
+        # Fix remaining TEXT columns that H2 converts to CLOB
+        # Hibernate expects VARCHAR for String fields with columnDefinition="TEXT"
+        
+        # Fix clients.fare (fare information)
+        - modifyDataType:
+            tableName: clients
+            columnName: fare
+            newDataType: VARCHAR(5000)
+        
+        # Fix header_templates.template_content (template content)
+        - modifyDataType:
+            tableName: header_templates
+            columnName: template_content
+            newDataType: VARCHAR(10000)
+
+# Made with Bob

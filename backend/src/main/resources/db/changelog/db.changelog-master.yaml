@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/001-create-roles-table.yaml
+  - include:
+      file: db/changelog/002-create-users-table.yaml
+  - include:
+      file: db/changelog/003-create-user-roles-table.yaml
+  - include:
+      file: db/changelog/004-create-clients-table.yaml
+  - include:
+      file: db/changelog/005-create-vehicle-types-table.yaml
+  - include:
+      file: db/changelog/006-create-vehicle-images-table.yaml
+  - include:
+      file: db/changelog/007-create-bookings-table.yaml
+  - include:
+      file: db/changelog/008-create-trip-sheets-table.yaml
+  - include:
+      file: db/changelog/009-create-billings-table.yaml
+  - include:
+      file: db/changelog/010-create-accounts-table.yaml
+  - include:
+      file: db/changelog/011-create-addresses-table.yaml
+  - include:
+      file: db/changelog/012-create-standard-fares-table.yaml
+  - include:
+      file: db/changelog/013-create-header-templates-table.yaml
+  - include:
+      file: db/changelog/014-seed-roles-and-admin.yaml
+  - include:
+      file: db/changelog/015-seed-sample-data.yaml
+  - include:
+      file: db/changelog/016-add-version-columns.yaml
+  - include:
+      file: db/changelog/017-fix-bill-img-column-type.yaml
+  - include:
+      file: db/changelog/018-fix-remaining-text-columns.yaml
+  - include:
+      file: db/changelog/019-fix-billing-trp-num-nullable.yaml
+  - include:
+      file: db/changelog/020-alter-standard-fares-rate-nullable.yaml
+  - include:
+      file: db/changelog/021-reset-sequences.yaml
+
+# Made with Bob

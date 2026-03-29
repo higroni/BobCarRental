@@ -1,0 +1,209 @@
+databaseChangeLog:
+  - changeSet:
+      id: 015-seed-sample-data
+      author: bob
+      changes:
+        # Sample Vehicle Types
+        - insert:
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: type_id
+                  value: 'AMB'
+              - column:
+                  name: type_desc
+                  value: 'Ambassador'
+              - column:
+                  name: tagged
+                  valueBoolean: false
+              - column:
+                  name: deleted
+                  valueBoolean: false
+        - insert:
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: type_id
+                  value: 'CON'
+              - column:
+                  name: type_desc
+                  value: 'Contessa'
+              - column:
+                  name: tagged
+                  valueBoolean: false
+              - column:
+                  name: deleted
+                  valueBoolean: false
+        - insert:
+            tableName: vehicle_types
+            columns:
+              - column:
+                  name: type_id
+                  value: 'SUMO'
+              - column:
+                  name: type_desc
+                  value: 'Tata Sumo'
+              - column:
+                  name: tagged
+                  valueBoolean: false
+              - column:
+                  name: deleted
+                  valueBoolean: false
+        
+        # Sample Client - MISC (for one-time clients)
+        - insert:
+            tableName: clients
+            columns:
+              - column:
+                  name: client_id
+                  value: 'MISC'
+              - column:
+                  name: client_name
+                  value: 'Miscellaneous Client'
+              - column:
+                  name: address1
+                  value: 'Various Locations'
+              - column:
+                  name: city
+                  value: 'Chennai'
+              - column:
+                  name: is_split
+                  valueBoolean: false
+              - column:
+                  name: tagged
+                  valueBoolean: false
+              - column:
+                  name: deleted
+                  valueBoolean: false
+        
+        # Sample Client - Regular
+        - insert:
+            tableName: clients
+            columns:
+              - column:
+                  name: client_id
+                  value: 'DEMO001'
+              - column:
+                  name: client_name
+                  value: 'Demo Travel Agency'
+              - column:
+                  name: address1
+                  value: '123 Main Street'
+              - column:
+                  name: address2
+                  value: 'T.Nagar'
+              - column:
+                  name: city
+                  value: 'Chennai'
+              - column:
+                  name: pin_code
+                  valueNumeric: 600017
+              - column:
+                  name: phone
+                  value: '044-12345678'
+              - column:
+                  name: is_split
+                  valueBoolean: false
+              - column:
+                  name: tagged
+                  valueBoolean: false
+              - column:
+                  name: deleted
+                  valueBoolean: false
+        
+        # Sample Standard Fares - Ambassador LOCAL
+        - insert:
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: vehicle_code
+                  value: 'AMB'
+              - column:
+                  name: fare_type
+                  value: 'LOCAL'
+              - column:
+                  name: hours
+                  valueNumeric: 4
+              - column:
+                  name: rate
+                  valueNumeric: 400.00
+              - column:
+                  name: free_km
+                  valueNumeric: 40
+              - column:
+                  name: split_fare
+                  valueNumeric: 300.00
+              - column:
+                  name: split_fuel_km
+                  valueNumeric: 40
+              - column:
+                  name: active
+                  valueBoolean: true
+              - column:
+                  name: is_active
+                  valueBoolean: true
+        
+        # Sample Standard Fares - Ambassador OUTSTATION
+        - insert:
+            tableName: standard_fares
+            columns:
+              - column:
+                  name: vehicle_code
+                  value: 'AMB'
+              - column:
+                  name: fare_type
+                  value: 'OUTSTATION'
+              - column:
+                  name: rate
+                  valueNumeric: 8.00
+              - column:
+                  name: rate_per_km
+                  valueNumeric: 8.00
+              - column:
+                  name: min_km_per_day
+                  valueNumeric: 250
+              - column:
+                  name: night_halt
+                  valueNumeric: 150.00
+              - column:
+                  name: active
+                  valueBoolean: true
+              - column:
+                  name: is_active
+                  valueBoolean: true
+        
+        # Sample Header Template
+        - insert:
+            tableName: header_templates
+            columns:
+              - column:
+                  name: template_name
+                  value: 'Default Invoice Header'
+              - column:
+                  name: template_content
+                  value: |
+                    ═══════════════════════════════════════════════════════════════════
+                                          {COMPANY_NAME}
+                                        {ADDRESS_LINE1}
+                                        {ADDRESS_LINE2}
+                                   {CITY} - {PIN_CODE}
+                                   Phone: {PHONE} | Fax: {FAX}
+                              [Govt. Authorised Tourist Car Operators]
+                    ═══════════════════════════════════════════════════════════════════
+              - column:
+                  name: description
+                  value: 'Default header template for invoices'
+              - column:
+                  name: active
+                  valueBoolean: true
+              - column:
+                  name: is_default
+                  valueBoolean: true
+              - column:
+                  name: template_type
+                  value: 'INVOICE'
+              - column:
+                  name: line_count
+                  valueNumeric: 7
+
+# Made with Bob

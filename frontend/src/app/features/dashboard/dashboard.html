@@ -1,0 +1,80 @@
+<div class="dashboard-container">
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1>Welcome, {{ currentUser?.fullName || currentUser?.username }}!</h1>
+      <p class="subtitle">Select a module to get started</p>
+    </div>
+
+    <!-- Module Cards Grid -->
+    <div class="modules-grid">
+      <mat-card 
+        *ngFor="let module of getVisibleModules()" 
+        class="module-card"
+        (click)="navigateToModule(module.route)"
+        [style.border-left-color]="module.color"
+      >
+        <mat-card-content>
+          <div class="module-icon" [style.background-color]="module.color">
+            <mat-icon>{{ module.icon }}</mat-icon>
+          </div>
+          <div class="module-info">
+            <h3>{{ module.title }}</h3>
+            <p *ngIf="module.adminOnly" class="admin-badge">
+              <mat-icon>admin_panel_settings</mat-icon>
+              Admin Only
+            </p>
+          </div>
+          <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Quick Stats (Placeholder) -->
+    <div class="stats-section">
+      <h2>Quick Stats</h2>
+      <div class="stats-grid">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <mat-icon class="stat-icon" style="color: #4CAF50;">people</mat-icon>
+            <div class="stat-info">
+              <h3>Total Clients</h3>
+              <p class="stat-value">{{ stats.totalClients }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <mat-icon class="stat-icon" style="color: #FF9800;">event</mat-icon>
+            <div class="stat-info">
+              <h3>Active Bookings</h3>
+              <p class="stat-value">{{ stats.activeBookings }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <mat-icon class="stat-icon" style="color: #2196F3;">directions_car</mat-icon>
+            <div class="stat-info">
+              <h3>Vehicle Types</h3>
+              <p class="stat-value">{{ stats.vehicleTypes }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <mat-icon class="stat-icon" style="color: #F44336;">receipt</mat-icon>
+            <div class="stat-info">
+              <h3>Pending Invoices</h3>
+              <p class="stat-value">{{ stats.pendingInvoices }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

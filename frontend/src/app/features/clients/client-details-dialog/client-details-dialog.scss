@@ -1,0 +1,65 @@
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+  min-width: 500px;
+  max-width: 600px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 8px 0;
+
+  .label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    text-align: right;
+  }
+
+  .value {
+    color: rgba(0, 0, 0, 0.87);
+    word-break: break-word;
+  }
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+mat-dialog-content {
+  padding: 0 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+// Made with Bob

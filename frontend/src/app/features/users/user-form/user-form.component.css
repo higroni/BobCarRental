@@ -1,0 +1,95 @@
+.user-form-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+mat-card-header {
+  margin-bottom: 20px;
+}
+
+mat-card-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  border-radius: 4px;
+  color: #c62828;
+}
+
+.error-message mat-icon {
+  color: #f44336;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.form-row.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-checkbox {
+  margin: 8px 0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.form-actions button {
+  min-width: 120px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-form-container {
+    padding: 10px;
+  }
+
+  .form-row.two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* Made with Bob */

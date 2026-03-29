@@ -1,0 +1,101 @@
+<h2 mat-dialog-title>
+  <mat-icon>person</mat-icon>
+  Client Details
+</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-row">
+      <span class="label">Client ID:</span>
+      <span class="value">{{ client.clientId }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Client Name:</span>
+      <span class="value">{{ client.clientName }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="client.address1">
+      <span class="label">Address Line 1:</span>
+      <span class="value">{{ client.address1 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.address2">
+      <span class="label">Address Line 2:</span>
+      <span class="value">{{ client.address2 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.address3">
+      <span class="label">Address Line 3:</span>
+      <span class="value">{{ client.address3 }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.place">
+      <span class="label">Place:</span>
+      <span class="value">{{ client.place }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.city">
+      <span class="label">City:</span>
+      <span class="value">{{ client.city }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.pinCode">
+      <span class="label">PIN Code:</span>
+      <span class="value">{{ client.pinCode }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-row" *ngIf="client.phone">
+      <span class="label">Phone:</span>
+      <span class="value">{{ client.phone }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.fax">
+      <span class="label">Fax:</span>
+      <span class="value">{{ client.fax }}</span>
+    </div>
+
+    <mat-divider *ngIf="client.isSplit !== undefined || client.tagged !== undefined"></mat-divider>
+
+    <div class="detail-row" *ngIf="client.isSplit !== undefined">
+      <span class="label">Split Rate Allowed:</span>
+      <span class="value">{{ client.isSplit ? 'Yes' : 'No' }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.tagged !== undefined">
+      <span class="label">Tagged:</span>
+      <span class="value">{{ client.tagged ? 'Yes' : 'No' }}</span>
+    </div>
+
+    <mat-divider *ngIf="client.fare"></mat-divider>
+
+    <div class="detail-row" *ngIf="client.fare">
+      <span class="label">Custom Fare:</span>
+      <span class="value">{{ client.fare }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.createdAt">
+      <span class="label">Created:</span>
+      <span class="value">{{ client.createdAt | date:'medium' }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="client.updatedAt">
+      <span class="label">Last Updated:</span>
+      <span class="value">{{ client.updatedAt | date:'medium' }}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+</mat-dialog-actions>
+
+<!-- Made with Bob -->
